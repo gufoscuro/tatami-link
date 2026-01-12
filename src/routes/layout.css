@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'DigitalFont';
+	src: url('$lib/assets/digital-7.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.digital-font {
+	font-family: 'DigitalFont', sans-serif;
+}
