@@ -39,6 +39,7 @@
 
 		ws.onopen = () => {
 			console.log('[WS] Connected to game', gameId);
+			ws?.send(JSON.stringify({ type: 'INIT' }));
 		};
 
 		ws.onmessage = (event) => {

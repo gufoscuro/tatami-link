@@ -64,7 +64,7 @@
 
 			{#if clientType === 'board'}
 				<!-- Timer Duration for Board -->
-				<div>
+				<!-- <div>
 					<label for="timer" class="mb-2 block text-sm font-medium text-slate-700">
 						Durata timer (secondi)
 					</label>
@@ -78,7 +78,7 @@
 						bind:value={timerSeconds}
 						class="w-full rounded-lg border-2 border-slate-300 px-4 py-3 focus:border-blue-600 focus:outline-none"
 					/>
-				</div>
+				</div> -->
 			{/if}
 
 			{#if clientType === 'remote'}
