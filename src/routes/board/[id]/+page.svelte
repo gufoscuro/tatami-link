@@ -166,27 +166,6 @@
 
 		<!-- Punteggi e Penalità -->
 		<div class="grid flex-1 grid-cols-2">
-			<!-- Zona ROSSA -->
-			<div class="flex flex-col items-center justify-center bg-red-600 p-6">
-				<div class="mb-4 text-6xl font-bold text-white">
-					{game.redScore}
-				</div>
-				<div class="mb-4 text-3xl font-semibold text-white/80">AKA</div>
-
-				<!-- Penalità ROSSE -->
-				<div class="flex gap-4">
-					{#each Array(3) as _, i}
-						<div
-							class="size-8 shrink-0 rounded-full border-4 transition-all"
-							class:bg-white={i < game.redPenalties}
-							class:border-white={i < game.redPenalties}
-							class:bg-red-700={i >= game.redPenalties}
-							class:border-red-500={i >= game.redPenalties}
-						></div>
-					{/each}
-				</div>
-			</div>
-
 			<!-- Zona BLU -->
 			<div class="flex flex-col items-center justify-center bg-blue-600 p-6">
 				<div class="mb-4 text-6xl font-bold text-white">
@@ -203,6 +182,27 @@
 							class:border-white={i < game.bluePenalties}
 							class:bg-blue-700={i >= game.bluePenalties}
 							class:border-blue-500={i >= game.bluePenalties}
+						></div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Zona ROSSA -->
+			<div class="flex flex-col items-center justify-center bg-red-600 p-6">
+				<div class="mb-4 text-6xl font-bold text-white">
+					{game.redScore}
+				</div>
+				<div class="mb-4 text-3xl font-semibold text-white/80">AKA</div>
+
+				<!-- Penalità ROSSE -->
+				<div class="flex gap-4">
+					{#each Array(3) as _, i}
+						<div
+							class="size-8 shrink-0 rounded-full border-4 transition-all"
+							class:bg-white={i < game.redPenalties}
+							class:border-white={i < game.redPenalties}
+							class:bg-red-700={i >= game.redPenalties}
+							class:border-red-500={i >= game.redPenalties}
 						></div>
 					{/each}
 				</div>
