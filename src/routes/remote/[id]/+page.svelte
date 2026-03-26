@@ -146,18 +146,10 @@
 
 	{#if game}
 		<div class="mx-auto max-w-2xl space-y-4">
-			<!-- Header -->
-			<div class="rounded-xl bg-slate-800 p-6 text-center">
-				<h1 class="mb-2 text-2xl font-bold text-white">Telecomando</h1>
-				<p class="font-mono text-xl text-slate-300">
-					ID: <span class="font-bold text-blue-400">{gameId}</span>
-				</p>
-			</div>
-
 			<!-- Timer Display & Controls -->
 			<div class="rounded-xl bg-slate-800 p-8">
-				<div class="mb-6 text-center">
-					<div class="mb-4 font-mono text-6xl font-bold text-white">
+				<div class="text-center">
+					<div class="mb-4 font-mono text-5xl font-bold text-white">
 						{formatTime(game.timerMinutes, game.timerSeconds)}
 					</div>
 					<div class="mb-6 flex justify-center gap-3">
@@ -189,7 +181,9 @@
 
 					<!-- Set Timer Duration -->
 					<div class="flex items-center justify-center gap-3">
-						<label for="duration" class="font-medium text-white">Imposta durata (sec):</label>
+						<label for="duration" class="text-xs font-medium text-white"
+							>Imposta durata (sec):</label
+						>
 						<input
 							id="duration"
 							type="number"
@@ -213,64 +207,6 @@
 
 			<!-- Score Controls -->
 			<div class="flex gap-4" class:flex-row-reverse={invertedZones}>
-				<!-- Red Team -->
-				<div class="w-1/2 rounded-xl bg-red-600 p-6">
-					<h2 class="mb-4 text-center text-2xl font-bold text-white">AKA</h2>
-					<div class="mb-6 text-center text-5xl font-bold text-white">
-						{game.redScore}
-					</div>
-					<div class="grid grid-cols-2 gap-3">
-						<button
-							onclick={() => sendAction({ type: 'SCORE_RED', amount: 1 })}
-							disabled={loading}
-							class="rounded-lg bg-red-700 py-4 text-xl font-bold text-white transition-all hover:bg-red-800 disabled:opacity-50"
-						>
-							+1
-						</button>
-						<button
-							onclick={() => sendAction({ type: 'SCORE_RED', amount: -1 })}
-							disabled={loading}
-							class="rounded-lg bg-red-800 py-4 text-xl font-bold text-white transition-all hover:bg-red-900 disabled:opacity-50"
-						>
-							-1
-						</button>
-					</div>
-
-					<!-- Red Penalties -->
-					<div class="mt-6">
-						<p class="mb-2 text-center text-sm font-medium text-white">
-							Penalità ({game.redPenalties}/3)
-						</p>
-						<div class="mb-3 flex justify-center gap-2">
-							{#each Array(3) as _, i}
-								<div
-									class="size-6 shrink-0 rounded-full border-2"
-									class:bg-white={i < game.redPenalties}
-									class:border-white={i < game.redPenalties}
-									class:bg-red-800={i >= game.redPenalties}
-									class:border-red-500={i >= game.redPenalties}
-								></div>
-							{/each}
-						</div>
-						<div class="grid grid-cols-2 gap-2">
-							<button
-								onclick={() => sendAction({ type: 'PENALTY_RED', add: true })}
-								disabled={loading || game.redPenalties >= 3}
-								class="rounded bg-yellow-500 py-2 font-semibold text-slate-900 transition-all hover:bg-yellow-600 disabled:opacity-50"
-							>
-								+
-							</button>
-							<button
-								onclick={() => sendAction({ type: 'PENALTY_RED', add: false })}
-								disabled={loading || game.redPenalties <= 0}
-								class="rounded bg-red-800 py-2 font-semibold text-white transition-all hover:bg-red-900 disabled:opacity-50"
-							>
-								-
-							</button>
-						</div>
-					</div>
-				</div>
-
 				<!-- Blue Team -->
 				<div class="w-1/2 rounded-xl bg-blue-600 p-6">
 					<h2 class="mb-4 text-center text-2xl font-bold text-white">AO</h2>
@@ -281,14 +217,14 @@
 						<button
 							onclick={() => sendAction({ type: 'SCORE_BLUE', amount: 1 })}
 							disabled={loading}
-							class="rounded-lg bg-blue-700 py-4 text-xl font-bold text-white transition-all hover:bg-blue-800 disabled:opacity-50"
+							class="rounded-lg bg-blue-700 py-2 text-xl font-bold text-white transition-all hover:bg-blue-800 disabled:opacity-50"
 						>
 							+1
 						</button>
 						<button
 							onclick={() => sendAction({ type: 'SCORE_BLUE', amount: -1 })}
 							disabled={loading}
-							class="rounded-lg bg-blue-800 py-4 text-xl font-bold text-white transition-all hover:bg-blue-900 disabled:opacity-50"
+							class="rounded-lg bg-blue-800 py-2 text-xl font-bold text-white transition-all hover:bg-blue-900 disabled:opacity-50"
 						>
 							-1
 						</button>
@@ -328,23 +264,89 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<button
-				class="w-full rounded-lg bg-slate-700 py-4 text-lg font-bold text-white"
-				onclick={() => (invertedZones = !invertedZones)}
-			>
-				Inverti zone
-			</button>
+				<!-- Red Team -->
+				<div class="w-1/2 rounded-xl bg-red-600 p-6">
+					<h2 class="mb-4 text-center text-2xl font-bold text-white">AKA</h2>
+					<div class="mb-6 text-center text-5xl font-bold text-white">
+						{game.redScore}
+					</div>
+					<div class="grid grid-cols-2 gap-3">
+						<button
+							onclick={() => sendAction({ type: 'SCORE_RED', amount: 1 })}
+							disabled={loading}
+							class="rounded-lg bg-red-700 py-2 text-xl font-bold text-white transition-all hover:bg-red-800 disabled:opacity-50"
+						>
+							+1
+						</button>
+						<button
+							onclick={() => sendAction({ type: 'SCORE_RED', amount: -1 })}
+							disabled={loading}
+							class="rounded-lg bg-red-800 py-2 text-xl font-bold text-white transition-all hover:bg-red-900 disabled:opacity-50"
+						>
+							-1
+						</button>
+					</div>
+
+					<!-- Red Penalties -->
+					<div class="mt-6">
+						<p class="mb-2 text-center text-sm font-medium text-white">
+							Penalità ({game.redPenalties}/3)
+						</p>
+						<div class="mb-3 flex justify-center gap-2">
+							{#each Array(3) as _, i}
+								<div
+									class="size-6 shrink-0 rounded-full border-2"
+									class:bg-white={i < game.redPenalties}
+									class:border-white={i < game.redPenalties}
+									class:bg-red-800={i >= game.redPenalties}
+									class:border-red-500={i >= game.redPenalties}
+								></div>
+							{/each}
+						</div>
+						<div class="grid grid-cols-2 gap-2">
+							<button
+								onclick={() => sendAction({ type: 'PENALTY_RED', add: true })}
+								disabled={loading || game.redPenalties >= 3}
+								class="rounded bg-yellow-500 py-2 font-semibold text-slate-900 transition-all hover:bg-yellow-600 disabled:opacity-50"
+							>
+								+
+							</button>
+							<button
+								onclick={() => sendAction({ type: 'PENALTY_RED', add: false })}
+								disabled={loading || game.redPenalties <= 0}
+								class="rounded bg-red-800 py-2 font-semibold text-white transition-all hover:bg-red-900 disabled:opacity-50"
+							>
+								-
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<!-- Reset Game -->
 			<button
 				onclick={() => sendAction({ type: 'RESET_GAME' })}
 				disabled={loading}
-				class="w-full rounded-lg bg-red-700 py-4 text-lg font-bold text-white transition-all hover:bg-red-800 disabled:opacity-50"
+				class="w-full rounded-lg bg-red-700 py-2 text-lg font-bold text-white transition-all hover:bg-red-800 disabled:opacity-50"
 			>
 				🔄 Reset Partita
 			</button>
+
+			<button
+				class="w-full rounded-lg bg-slate-700 py-2 text-lg font-bold text-white"
+				onclick={() => (invertedZones = !invertedZones)}
+			>
+				Inverti zone
+			</button>
+
+			<!-- Footer -->
+			<div class="rounded-xl bg-slate-800 p-6 text-center">
+				<h1 class="mb-2 text-2xl font-bold text-white">Telecomando</h1>
+				<p class="font-mono text-xl text-slate-300">
+					ID: <span class="font-bold text-blue-400">{gameId}</span>
+				</p>
+			</div>
 		</div>
 	{:else}
 		<div class="flex min-h-screen items-center justify-center">

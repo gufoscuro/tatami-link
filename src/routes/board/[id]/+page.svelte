@@ -99,6 +99,12 @@
 	});
 
 	$effect(() => {
+		if (game && game.timerRunning) {
+			bellPlayed = false;
+		}
+	});
+
+	$effect(() => {
 		console.log('game changed:', game);
 		if (game && game.timerSeconds === 0 && game.timerMinutes === 0 && !bellPlayed) {
 			console.log('[Board] Timer reached zero, playing sound');
@@ -114,7 +120,7 @@
 	}
 </script>
 
-<div class="flex min-h-screen flex-col bg-slate-900">
+<div class="relative flex min-h-screen flex-col bg-slate-900">
 	{#if error}
 		<div class="flex flex-1 items-center justify-center">
 			<div class="rounded-lg bg-red-500 p-6 text-white">
@@ -124,7 +130,7 @@
 	{:else if game}
 		<!-- Header con ID -->
 		<div
-			class="grid grid-cols-3 items-center gap-4 border-b-4 border-slate-700 bg-slate-800 p-4 text-center"
+			class="grid grid-cols-2 items-center gap-4 p-4 text-center max-md:absolute max-md:top-0 max-md:left-0 max-md:w-full md:border-b-4 md:border-slate-700 md:bg-slate-800"
 		>
 			<div class="">
 				<div
@@ -132,7 +138,7 @@
 					class:bg-slate-300={game.remoteConnected}
 				></div>
 			</div>
-			<h1 class="mb-2 text-2xl font-semibold text-white">Tatami Link</h1>
+			<!-- <h1 class="mb-2 text-2xl font-semibold text-white">Tatami Link</h1> -->
 			<div class="text-right font-mono text-2xl text-slate-300">
 				<span class="text-2xl font-bold tracking-[0.35rem] text-blue-400">{gameId}</span>
 			</div>
@@ -166,27 +172,6 @@
 
 		<!-- Punteggi e Penalità -->
 		<div class="grid flex-1 grid-cols-2">
-			<!-- Zona BLU -->
-			<div class="flex flex-col items-center justify-center bg-blue-600 p-6">
-				<div class="mb-4 text-6xl font-bold text-white">
-					{game.blueScore}
-				</div>
-				<div class="mb-4 text-3xl font-semibold text-white/80">AO</div>
-
-				<!-- Penalità BLU -->
-				<div class="flex gap-4">
-					{#each Array(3) as _, i}
-						<div
-							class="size-8 shrink-0 rounded-full border-4 transition-all"
-							class:bg-white={i < game.bluePenalties}
-							class:border-white={i < game.bluePenalties}
-							class:bg-blue-700={i >= game.bluePenalties}
-							class:border-blue-500={i >= game.bluePenalties}
-						></div>
-					{/each}
-				</div>
-			</div>
-
 			<!-- Zona ROSSA -->
 			<div class="flex flex-col items-center justify-center bg-red-600 p-6">
 				<div class="mb-4 text-6xl font-bold text-white">
@@ -203,6 +188,27 @@
 							class:border-white={i < game.redPenalties}
 							class:bg-red-700={i >= game.redPenalties}
 							class:border-red-500={i >= game.redPenalties}
+						></div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Zona BLU -->
+			<div class="flex flex-col items-center justify-center bg-blue-600 p-6">
+				<div class="mb-4 text-6xl font-bold text-white">
+					{game.blueScore}
+				</div>
+				<div class="mb-4 text-3xl font-semibold text-white/80">AO</div>
+
+				<!-- Penalità BLU -->
+				<div class="flex gap-4">
+					{#each Array(3) as _, i}
+						<div
+							class="size-8 shrink-0 rounded-full border-4 transition-all"
+							class:bg-white={i < game.bluePenalties}
+							class:border-white={i < game.bluePenalties}
+							class:bg-blue-700={i >= game.bluePenalties}
+							class:border-blue-500={i >= game.bluePenalties}
 						></div>
 					{/each}
 				</div>

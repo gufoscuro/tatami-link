@@ -1,16 +1,26 @@
 import { WebSocketServer } from 'ws';
-import { g as getGame, u as updateGame, t as tickTimer } from './.svelte-kit/output/server/chunks/game-store.js';
 
 const clients = new Map();
 const gameTimers = new Map();
 
 export function websocketPlugin() {
+	let gameStore = null;
+
 	return {
 		name: 'websocket-plugin',
 		configureServer(server) {
 			if (!server.httpServer) return;
 
 			const wss = new WebSocketServer({ noServer: true });
+
+			// Load game store through Vite's module system so we share
+			// the same singleton instance used by SvelteKit API routes
+			async function loadGameStore() {
+				if (!gameStore) {
+					gameStore = await server.ssrLoadModule('$lib/server/game-store');
+				}
+				return gameStore;
+			}
 
 			server.httpServer.on('upgrade', (request, socket, head) => {
 				const url = new URL(request.url, `http://${request.headers.host}`);
@@ -22,7 +32,7 @@ export function websocketPlugin() {
 				}
 			});
 
-			wss.on('connection', (ws, request) => {
+			wss.on('connection', async (ws, request) => {
 				const url = new URL(request.url, `http://${request.headers.host}`);
 				const gameId = url.searchParams.get('gameId');
 
@@ -31,6 +41,8 @@ export function websocketPlugin() {
 					return;
 				}
 
+				const store = await loadGameStore();
+
 				if (!clients.has(gameId)) {
 					clients.set(gameId, new Set());
 				}
@@ -38,22 +50,23 @@ export function websocketPlugin() {
 
 				console.log(`[WS Dev] Client connected to game ${gameId}`);
 
-				const game = getGame(gameId);
+				const game = store.getGame(gameId);
 				if (game) {
 					ws.send(JSON.stringify({ type: 'STATE', data: game }));
 				}
 
-				ws.on('message', (message) => {
+				ws.on('message', async (message) => {
 					try {
 						const data = JSON.parse(message.toString());
 
 						if (data.type === 'ACTION') {
 							const action = data.action;
-							const updatedGame = updateGame(gameId, action);
+							const s = await loadGameStore();
+							const updatedGame = s.updateGame(gameId, action);
 
 							if (updatedGame) {
 								if (action.type === 'TIMER_START') {
-									startGameTimer(gameId);
+									startGameTimer(gameId, s);
 								} else if (action.type === 'TIMER_STOP' || action.type === 'TIMER_RESET') {
 									stopGameTimer(gameId);
 								}
@@ -91,11 +104,11 @@ function broadcast(gameId, message) {
 	});
 }
 
-function startGameTimer(gameId) {
+function startGameTimer(gameId, store) {
 	stopGameTimer(gameId);
 
 	const interval = setInterval(() => {
-		const game = tickTimer(gameId);
+		const game = store.tickTimer(gameId);
 		if (game) {
 			broadcast(gameId, { type: 'STATE', data: game });
 

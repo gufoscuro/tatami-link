@@ -6,7 +6,8 @@
       "Bash(node --version)",
       "Bash(nvm current:*)",
       "Bash(export PATH=\"/Users/lorenzofontana/.nvm/versions/node/v20.19.6/bin:$PATH\")",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(ls -la /Users/lorenzofontana/Documents/js-apps/tatami-link/.env*)"
     ]
   }
 }
