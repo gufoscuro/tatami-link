@@ -146,22 +146,24 @@
 
 		<!-- Timer Centrale -->
 		<div
-			class="flex h-[50vh] items-center justify-center border-b-4 border-slate-700 bg-slate-800 py-8"
+			class="flex h-[40vh] items-center justify-center border-b-4 border-slate-700 bg-slate-800 py-8 xl:h-[50vh]"
 		>
 			<div class="text-center">
-				<div class="digital-font font-mono text-[10rem] leading-[10rem] tracking-wider text-white">
+				<div
+					class="digital-font font-mono text-[8rem] leading-[8rem] tracking-wider text-white xl:text-[10rem]"
+				>
 					{formatTime(game.timerMinutes, game.timerSeconds)}
 				</div>
 				<div class="mt-4">
 					{#if game.timerRunning}
 						<span
-							class="inline-block rounded-full bg-green-500 px-6 py-2 text-xl font-semibold text-white"
+							class="inline-block rounded-full bg-green-500 px-6 py-2 text-lg font-semibold text-white xl:text-xl"
 						>
 							IN CORSO
 						</span>
 					{:else}
 						<span
-							class="inline-block rounded-full bg-slate-600 px-6 py-2 text-xl font-semibold text-white"
+							class="inline-block rounded-full bg-slate-600 px-6 py-2 text-lg font-semibold text-white xl:text-xl"
 						>
 							IN PAUSA
 						</span>
@@ -174,7 +176,7 @@
 		<div class="grid flex-1 grid-cols-2">
 			<!-- Zona ROSSA -->
 			<div class="flex flex-col items-center justify-center bg-red-600 p-6">
-				<div class="mb-4 text-6xl font-bold text-white">
+				<div class="mb-4 text-9xl font-bold text-white">
 					{game.redScore}
 				</div>
 				<div class="mb-4 text-3xl font-semibold text-white/80">AKA</div>
@@ -195,7 +197,7 @@
 
 			<!-- Zona BLU -->
 			<div class="flex flex-col items-center justify-center bg-blue-600 p-6">
-				<div class="mb-4 text-6xl font-bold text-white">
+				<div class="mb-4 text-9xl font-bold text-white">
 					{game.blueScore}
 				</div>
 				<div class="mb-4 text-3xl font-semibold text-white/80">AO</div>
