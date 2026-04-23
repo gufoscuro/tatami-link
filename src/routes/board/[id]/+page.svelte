@@ -146,7 +146,7 @@
 
 		<!-- Timer Centrale -->
 		<div
-			class="flex h-[40vh] items-center justify-center border-b-4 border-slate-700 bg-slate-800 py-8 xl:h-[50vh]"
+			class="flex h-[35vh] items-center justify-center border-b-4 border-slate-700 bg-slate-800 py-8 xl:h-[50vh]"
 		>
 			<div class="text-center">
 				<div
